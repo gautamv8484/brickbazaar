@@ -148,7 +148,7 @@ const SellerDashboard = () => {
         console.log("📤 Uploading new image...");
 
         const uploadRes = await uploadAPI.uploadImage(editImageFile);
-        imageUrl = `${process.env.REACT_APP_API_URL}${uploadRes.data.imageUrl}`;
+        imageUrl = `http://localhost:5000${uploadRes.data.imageUrl}`;
 
         console.log("✅ Image uploaded:", imageUrl);
         setUploading(false);
