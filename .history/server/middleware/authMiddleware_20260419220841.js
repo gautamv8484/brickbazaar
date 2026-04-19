@@ -18,10 +18,7 @@ exports.protect = async (req, res, next) => {
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    
-    // ✅ decoded.id use karo
-    req.user = await User.findById(decoded.id).select('-password');
-
+    req.user = await User.findById(decoded.id || decoded.userId).select('-password');
     if (!req.user) {
       return res.status(401).json({
         success: false,
@@ -29,10 +26,11 @@ exports.protect = async (req, res, next) => {
       });
     }
 
+    // Check if user is banned
     if (req.user.isBanned) {
       return res.status(403).json({
         success: false,
-        message: 'Your account has been suspended.'
+        message: 'Your account has been suspended. Contact admin for support.'
       });
     }
 
