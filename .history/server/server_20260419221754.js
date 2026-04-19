@@ -12,7 +12,6 @@ connectDB();
 
 const app = express();
 
-app.set('trust proxy', 1);
 // ========== 🛡️ Security Middleware ==========
 
 // Set security HTTP headers
@@ -34,7 +33,7 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // ========== 🚦 Rate Limiting ==========
-
+app.set('trust proxy', 1);
 // General API rate limit
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
